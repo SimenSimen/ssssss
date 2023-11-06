@@ -3,7 +3,7 @@ version: "3.8"
 services:
   gitlab:
     networks:
-      - simen-service
+      - simen-networks
     build:
       context: ./gitlab
       dockerfile: Dockerfile
@@ -31,3 +31,7 @@ services:
       - './.data/nginx/conf.d:/etc/nginx/conf.d'
       - './.data/nginx/certs:/etc/nginx/certs'
       - './.data/nginx/html:/usr/share/nginx/html'
+
+networks:
+  simen-networks:
+    external: true
