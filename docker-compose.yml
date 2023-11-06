@@ -2,6 +2,8 @@ version: "3.8"
 
 services:
   gitlab:
+    networks:
+      - simen-service
     build:
       context: ./gitlab
       dockerfile: Dockerfile
@@ -16,3 +18,16 @@ services:
       - './.data/gitlab/config:/etc/gitlab'
       - './.data/gitlab/logs:/var/log/gitlab'
       - './.data/gitlab/data:/var/opt/gitlab'
+  nginx: 
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: simen-nginx
+    restart: always
+    ports:
+      - '15580:80'
+      - '15581:443'
+    volumes:
+      - './.data/nginx/conf.d:/etc/nginx/conf.d'
+      - './.data/nginx/certs:/etc/nginx/certs'
+      - './.data/nginx/html:/usr/share/nginx/html'
