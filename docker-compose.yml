@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  gitlab:
+    build:
+      context: ./gitlab
+      dockerfile: Dockerfile
+    container_name: simen-gitlab
+    restart: always
+    hostname: git.oubtest.xyz
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'git.oubtest.xyz'
+        gitlab_rails['gitlab_shell_ssh_port'] = 2224
+    volumes:
+      - './.data/gitlab/config:/etc/gitlab'
+      - './.data/gitlab/logs:/var/log/gitlab'
+      - './.data/gitlab/data:/var/opt/gitlab'
